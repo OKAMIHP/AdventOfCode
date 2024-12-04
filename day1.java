@@ -1,28 +1,44 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+
 public class day1 {
     public static void main(String[] args) {
-        int min = 0;
-        ArrayList<String> fileData = getFileData("src/input.txt");
-        for(int i = 0; i < fileData.size(); i++)
+        int sum = 0;
+        ArrayList<String> fileData = getFileData("input");
+        ArrayList<Integer> list1 = new ArrayList<>();
+        ArrayList<Integer> list2 = new ArrayList<>();
+        ArrayList<Integer> differences= new ArrayList<>();
+        for(int i = 0; i < fileData.size(); i++){
+            String[] split = fileData.get(i).split("   ");
+            list1.add(Integer.parseInt(split[0]));
+            list2.add(Integer.parseInt(split[1]));
+        }
+        Collections.sort(list1);
+        Collections.sort(list2);
+        for( int i = 0; i < list1.size(); i++){
+            differences.add(Math.abs(list1.get(i) - list2.get(i)));
+        }
+        for(int difference : differences)
         {
-            String str = Array.get(fileData,i).toString();
-
+            sum += difference;
         }
-        System.out.println(fileData);
-        String str = "[,\\.\\s]";
-        String[] myArray = fileData.split(str);
-        for(String s : myArray){
-            int num1= s.parseInt(s);
+        System.out.println(sum);
+        int sim = 0;
 
+        for (Integer value : list1){
+            int count = 0;
+            for(Integer val : list2){
+                if (value.equals(val)){
+                    count++;
+                }
+            }
+            sim += count * value;
         }
+        System.out.println(sim);
     }
-
 
     public static ArrayList<String> getFileData(String fileName) {
         ArrayList<String> fileData = new ArrayList<String>();
