@@ -7,54 +7,25 @@ public class day2 {
     public static void main(String[] args) {
         int safeCount = 0;
         boolean safety = false;
-        boolean lastIncrement = false;
+        boolean firstIncrement = false;
         boolean increasing = false;
         ArrayList<String> fileData = getFileData("input");
-        for(int i = 0; i < fileData.size(); i++){
+        for(int i = 0; i < fileData.size(); i++) // goes into the big array
+        {
+            int[] differences = {};
             String[] split = fileData.get(i).split(" ");
-            for( int j = 0; j < split.length - 1; j++)
-            {
+            for(int j = 0; j < split.length - 1; j++) // goes into small array
+            { // checks for difference of atmost 3 or atleast 1
                 int difference = Math.abs(Integer.parseInt(split[j]) - Integer.parseInt(split[j + 1]));
-                if((difference < 1) || (difference > 3)){
-                    safety = false;
-                    break;
-                }
-                else{
-                    if(Integer.parseInt(split[j]) < Integer.parseInt(split[j + 1]))
-                    {
-                        increasing = true;
-                        lastIncrement = true;
-                    }
-                    else
-                    {
-                        increasing = false;
-                        lastIncrement = false;
-                    }
-                    for( int k = 1; k < split.length; k++)
-                    {
-                        if(Integer.parseInt(split[j]) < Integer.parseInt(split[j + 1]))
-                        {
-                            increasing = true;
-                        }
-                        else{
-                            increasing = false;
-                        }
-                        if(lastIncrement != increasing)
-                        {
-                            safety = false;
-                            break;
-                        }
-                        else{
-                            safety = true;
-                        }
-                    }
-                }
-            }
-            if(safety == true)
-            {
-                safeCount++;
-            }
 
+                if((difference < 1) || (difference > 3)){ // checks every individual number in the small array
+                    safety = false;
+                    break; // breaks out of entire loop immediately to the safety check
+                }
+                else { // step 2: checking if the levels are increasing or decreasing
+
+                }
+            }
         }
         System.out.println(safeCount);
         // you now have an ArrayList of Strings for each number in the file
