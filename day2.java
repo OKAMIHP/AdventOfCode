@@ -13,11 +13,9 @@ public class day2 {
         for(int i = 0; i < fileData.size(); i++) // goes into the big array
         {
             split = fileData.get(i).split(" ");
-            boolean check = levelCheck(split);
-            for(int j = 0; j < split.length - 1; j++) // goes into small array
-            { // checks for difference of at most 3 or at least 1
-                int difference = Math.abs(Integer.parseInt(split[j]) - Integer.parseInt(split[j + 1]));
-                if(sizeCheck(difference, levelCheck(split)))
+            for(int j = 0; j < split.length; j++)
+            {
+                if (levelDifference(split) && increasing(split))
                 {
                     safeCount++;
                 }
@@ -26,65 +24,40 @@ public class day2 {
         System.out.println(safeCount);
         // you now have an ArrayList of Strings for each number in the file
         // do Advent 2020 day 1!
-
     }
+    // one func for increasing, decreasing, check for level difference
 
-    public static boolean levelCheck(String[] split) // checks if the array is increasing or decreasing or neither ( not safe)
+    public static boolean levelDifference(String[] split)
     {
-        boolean increasing = false;
-        ArrayList<Integer> differenceArray = new ArrayList<Integer>();
-        int sum = 0;
-            for(int i = 0; i < split.length; i++)
-            {
-                int difference2 = Integer.parseInt(split[i]) - Integer.parseInt(split[i + 1]);
-                differenceArray.add(difference2);
-            }
-            for(int k = 0; k< differenceArray.size(); k++) // creates a sum of all differences ( if positive decreasing, if negative increasing)
-            {
-                sum+= differenceArray.get(k);
-            }
-            if(sum > 0) // checks if it's increasing or not
-            {
-                increasing = false;
-            }
-            else
-            {
-                increasing = true;
-            }
-            for(int i = 0; i < split.length; i++)
-            {
-                if(differenceArray.get(i) > 0 && increasing) // 1 - 3 = -2 decreasing but increasing
-                {
-                    return false;
-                }
-                else
-                {
-                    if(differenceArray.get(i) < 0 && !increasing) // 3 - 1 = 2 increasing but decreasing
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-        return false;
-    }
-
-    static boolean sizeCheck(int d, boolean levelCheck){
-        if((d < 1) || (d > 3)){ // checks every individual number in the small array
-            return false;
-        }
-        else {
-            if(levelCheck)
+        for(int i = 0; i < split.length - 1; i++)
+        {
+            int difference = Math.abs(Integer.parseInt(split[i]) - Integer.parseInt(split[i + 1]));
+            if(difference >= 1 && difference <= 3)
             {
                 return true;
             }
-            else {
-                return false;
-            }
         }
+        return false;
+    }
+
+    public static boolean increasing(String[] split)
+    {
+        int sum = 0;
+        for(int i = 0; i < split.length - 1; i++){
+          sum+= Integer.parseInt(split[i]) - Integer.parseInt(split[i + 1]);
+        }
+        return (sum < 0);
+    }
+
+    public static boolean incrementCheck(boolean increasing, String[] split)
+    {
+        ArrayList<Integer> differenceArray = new ArrayList<Integer>();
+        for(int i = 0; i < split.length; i++)
+        {
+            differenceArray.add(Integer.parseInt(split[i]) - Integer.parseInt(split[i + 1]));
+
+        }
+        if
     }
 
     public static ArrayList<String> getFileData(String fileName) {
