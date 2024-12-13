@@ -13,7 +13,7 @@ public class day2 {
         for(int i = 0; i < fileData.size(); i++) // goes into the big array
         {
             split = fileData.get(i).split(" ");
-            for(int j = 0; j < split.length; j++)
+            for(int j = 0; j < ; j++)
             {
                 if (levelDifference(split) && increasing(split))
                 {
@@ -55,9 +55,18 @@ public class day2 {
         for(int i = 0; i < split.length; i++)
         {
             differenceArray.add(Integer.parseInt(split[i]) - Integer.parseInt(split[i + 1]));
-
         }
-        if
+        for(int i = 0; i < split.length; i++)
+        {
+            if(((differenceArray.get(i) < 0) && increasing) ||((differenceArray.get(i) > 0) && !increasing) )
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public static ArrayList<String> getFileData(String fileName) {
